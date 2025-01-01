@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Alert, Button, FlatList, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
+import FlexBox from './components/flex.box';
 
 interface Todo {
   id: number;
@@ -45,44 +46,7 @@ export default function App() {
 
       <View style={styles.container}>
         
-        {/* header */}
-        <View>
-          <Text style={styles.header}>TODO APP</Text>
-        </View>
-  
-        {/* form */}
-        <View>
-          <TextInput 
-            value={todo}
-            style={styles.todoInput}
-            onChangeText={(text) => setTodo(text)}
-          />
-          <Button
-            title="Add TODO"
-            onPress={() => {
-              handleAddTodo();
-            }}
-          />
-        </View>
-  
-        {/* list */}
-        <View style={styles.body}>
-          <FlatList
-            data={listTodo}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({item}) => {
-              return (
-                <Pressable
-                  onPress={() => {
-                    deleteTodo(item.id);
-                  }}
-                >
-                  <Text style={styles.todoItem}>{item.name}</Text>
-                </Pressable>  
-              )
-            }}
-          />
-        </View>
+        <FlexBox />
   
       </View>
 
