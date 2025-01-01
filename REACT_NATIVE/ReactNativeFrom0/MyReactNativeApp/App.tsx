@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Button, FlatList, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, FlatList, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 interface Todo {
   id: number;
@@ -15,6 +15,19 @@ export default function App() {
 
   function randomInteger(min: number, max: number) { 
     return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  const handleAddTodo = () =>{
+    if(!todo) {
+      alert("Please enter a todo");
+      return;
+    }
+    setListTodo([...listTodo, {id: randomInteger(2,1000000), name: todo}]);
+    setTodo("");
+  }
+
+  const deleteTodo = (id: number) => {
+    setListTodo(listTodo.filter((item) => item.id !== id));
   }
 
   return (
@@ -35,8 +48,7 @@ export default function App() {
         <Button
           title="Add TODO"
           onPress={() => {
-            setListTodo([...listTodo, {id: randomInteger(2,1000000), name: todo}]);
-            setTodo("");
+            handleAddTodo();
           }}
         />
       </View>
@@ -46,9 +58,17 @@ export default function App() {
         <FlatList
           data={listTodo}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({item}) => (
-            <Text>{item.name}</Text>
-          )}
+          renderItem={({item}) => {
+            return (
+              <Pressable
+                onPress={() => {
+                  deleteTodo(item.id);
+                }}
+              >
+                <Text style={styles.todoItem}>{item.name}</Text>
+              </Pressable>  
+            )
+          }}
         />
       </View>
 
@@ -79,7 +99,7 @@ const styles = StyleSheet.create({
 
   body: {
     paddingHorizontal: 20,
-    marginBottom: 20,
+    margin: 20,
   },
 
   todoItem: {
