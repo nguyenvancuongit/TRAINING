@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { Alert, Button, FlatList, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
-import FlexBox from './components/flex.box';
+
+import {AntDesign} from '@expo/vector-icons';
 
 interface Todo {
   id: number;
@@ -46,7 +47,36 @@ export default function App() {
 
       <View style={styles.container}>
         
-        <FlexBox />
+        {/* header */}
+        <View >
+          <Text style={styles.header}>Todo App</Text>
+        </View>
+
+        {/* form */}
+        <View style={styles.form}>
+          <TextInput 
+            placeholder="Enter a todo"
+            value={todo}
+            onChangeText={(text) => setTodo(text)}
+          />
+          <Button title="Add Todo" onPress={handleAddTodo}/>
+        </View>
+
+        {/* list todo */}
+        <View style={styles.todo}>
+          <FlatList 
+            data={listTodo}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({item}) => (
+              <Pressable onPress={() => deleteTodo(item.id)}>
+                <View style={styles.grouptodo}>
+                  <Text>{item.name}</Text>
+                  <AntDesign name="close" size={24} color="black" />
+                </View>
+              </Pressable>
+            )}
+          />
+        </View>
   
       </View>
 
@@ -61,30 +91,26 @@ const styles = StyleSheet.create({
   },
   
   header: {
-    backgroundColor: 'orange',
-    padding: 20,
-    alignItems: 'center',
-    marginTop: 30,
+    marginTop: 50,
+    backgroundColor: 'lightblue',
+    padding: 10,
     textAlign: 'center',
   },
 
-  todoInput: {
+  form: {
     borderBottomWidth: 1,
-    borderBottomColor: 'green',
+    borderBottomColor: 'gray',
     padding: 10,
     margin: 10,
   },
 
-  body: {
-    paddingHorizontal: 20,
-    margin: 20,
+  todo: {
+    margin: 15,
   },
 
-  todoItem: {
-    fontSize: 20,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    marginBottom: 10,
-    padding: 10,
+  grouptodo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   }
 });
