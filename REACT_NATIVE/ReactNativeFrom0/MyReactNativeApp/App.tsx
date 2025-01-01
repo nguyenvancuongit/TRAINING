@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, FlatList, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function App() {
 
@@ -44,6 +44,8 @@ export default function App() {
     { name: 'Jane', key: '37' },
   ]);
 
+  const numColumns = 2;
+
   return (
     <View style={styles.container}>
       
@@ -51,19 +53,21 @@ export default function App() {
         marginTop: 50,
       }}>Students:</Text>
 
-      <ScrollView>
-        {students.map(item => {
+      <FlatList
+        data={students}
+        keyExtractor={item => item.key}
+        key={`flatlist-${numColumns}`}
+        numColumns={numColumns}
+        renderItem={({ item }) => {
           return (
-            <View key={item.key} style={{
-              padding: 30,
-              backgroundColor: 'pink',
-              marginBottom: 10
+            <View style={{
+              padding: 30
             }}>
               <Text>{item.name}</Text>
             </View>
           )
-        })}
-      </ScrollView>
+        }}
+      />
 
     </View>
   );
