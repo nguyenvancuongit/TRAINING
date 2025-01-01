@@ -2,72 +2,55 @@ import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { Button, FlatList, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
+interface Todo {
+  id: number;
+  name: string;
+}
+
 export default function App() {
 
-  const [students, setStudents] = useState([
-    { name: 'John', key: '1' },
-    { name: 'Doe', key: '2' },
-    { name: 'Jane', key: '3' },
-    { name: 'Doe', key: '4' },
-    { name: 'Jane', key: '5' },
-    { name: 'Doe', key: '6' },
-    { name: 'Jane', key: '7' },
-    { name: 'Doe', key: '8' },
-    { name: 'Jane', key: '9' },
-    { name: 'Doe', key: '10' },
-    { name: 'Jane', key: '11' },
-    { name: 'Doe', key: '12' },
-    { name: 'Jane', key: '13' },
-    { name: 'Doe', key: '14' },
-    { name: 'Jane', key: '15' },
-    { name: 'Doe', key: '16' },
-    { name: 'Jane', key: '17' },
-    { name: 'Doe', key: '18' },
-    { name: 'Jane', key: '19' },
-    { name: 'Doe', key: '20' },
-    { name: 'Jane', key: '21' },
-    { name: 'Doe', key: '22' },
-    { name: 'Jane', key: '23' },
-    { name: 'Doe', key: '24' },
-    { name: 'Jane', key: '25' },
-    { name: 'Doe', key: '26' },
-    { name: 'Jane', key: '27' },
-    { name: 'Doe', key: '28' },
-    { name: 'Jane', key: '29' },
-    { name: 'Doe', key: '30' },
-    { name: 'Jane', key: '31' },
-    { name: 'Doe', key: '32' },
-    { name: 'Jane', key: '33' },
-    { name: 'Doe', key: '34' },
-    { name: 'Jane', key: '35' },
-    { name: 'Doe', key: '36' },
-    { name: 'Jane', key: '37' },
-  ]);
+  const [todo, setTodo] = useState("");
 
-  const numColumns = 2;
+  const [listTodo, setListTodo] = useState<Todo[]>([]);
+
+  function randomInteger(min: number, max: number) { 
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
   return (
     <View style={styles.container}>
       
-      <Text style={{
-        marginTop: 50,
-      }}>Students:</Text>
+     {/* header */}
+      <View>
+        <Text style={styles.header}>TODO APP</Text>
+      </View>
 
-      <FlatList
-        data={students}
-        keyExtractor={item => item.key}
-        key={`flatlist-${numColumns}`}
-        numColumns={numColumns}
-        renderItem={({ item }) => {
-          return (
-            <View style={{
-              padding: 30
-            }}>
-              <Text>{item.name}</Text>
-            </View>
-          )
-        }}
-      />
+      {/* form */}
+      <View>
+        <TextInput 
+          value={todo}
+          style={styles.todoInput}
+          onChangeText={(text) => setTodo(text)}
+        />
+        <Button
+          title="Add TODO"
+          onPress={() => {
+            setListTodo([...listTodo, {id: randomInteger(2,1000000), name: todo}]);
+            setTodo("");
+          }}
+        />
+      </View>
+
+      {/* list */}
+      <View style={styles.body}>
+        <FlatList
+          data={listTodo}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({item}) => (
+            <Text>{item.name}</Text>
+          )}
+        />
+      </View>
 
     </View>
   );
@@ -78,4 +61,32 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  
+  header: {
+    backgroundColor: 'orange',
+    padding: 20,
+    alignItems: 'center',
+    marginTop: 30,
+    textAlign: 'center',
+  },
+
+  todoInput: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'green',
+    padding: 10,
+    margin: 10,
+  },
+
+  body: {
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+
+  todoItem: {
+    fontSize: 20,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    marginBottom: 10,
+    padding: 10,
+  }
 });
