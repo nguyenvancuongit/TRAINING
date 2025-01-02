@@ -1,5 +1,6 @@
-import { StyleSheet, Text } from "react-native";
+import { View, Button, StyleSheet, Text } from "react-native";
 import { OPENSAN_REGULAR } from "../../utils/const";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 
 const styles = StyleSheet.create({
     review: {
@@ -9,8 +10,17 @@ const styles = StyleSheet.create({
 })
 
 const DetailScreen = () => {
+
+    const natigation: NavigationProp<RootStackParamList> = useNavigation();
+
     return (
-        <Text style={styles.review}>This is text is Detail Screen</Text>
+        <View>
+            <Text style={styles.review}>This is text is Detail Screen</Text>
+            <Button
+                title="Back to Home"
+                onPress={() => natigation.navigate("home")}
+            />
+        </View>
     );
 };
 
