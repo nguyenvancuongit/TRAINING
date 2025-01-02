@@ -1,8 +1,11 @@
-import { Text } from "react-native";
+import { View, Button, Text } from "react-native";
 
 const HomeScreen = () => {
     return (
-        <Text>This is text is Home Screen</Text>
+        <View>
+            <Text>This is text is Home Screen</Text>
+            <Button title="Go to Detail Screen" onPress={() => alert("me")} />
+        </View>
     );
 };
 
