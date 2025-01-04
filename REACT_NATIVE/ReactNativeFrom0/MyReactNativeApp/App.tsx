@@ -11,6 +11,8 @@ import { OPENSAN_REGULAR } from './utils/const';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import AppNavigation from './components/navigation/app.navigation';
+
 SplashScreen.preventAutoHideAsync()
 
 const App = () => {
@@ -29,22 +31,9 @@ const App = () => {
     return null;
   }
 
-  const Stack = createNativeStackNavigator<RootStackParamList>();
-
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="home"
-          component={HomeScreen}
-          options={{ title: 'Home Page' }}
-        />
-        <Stack.Screen
-          name="review-detail"
-          component={DetailScreen}
-          options={{ title: 'Detail Page' }}
-        />
-      </Stack.Navigator>
+      <AppNavigation />
     </NavigationContainer>
   )
 }
