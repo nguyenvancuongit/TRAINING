@@ -2,16 +2,14 @@ import { Text, View } from 'react-native';
 import HomeScreen from './components/review/home';
 import DetailScreen from './components/review/detail';
 import AboutScreen from './components/review/about';
-
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
 import { OPENSAN_REGULAR } from './utils/const';
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import AppNavigation from './components/navigation/app.navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 SplashScreen.preventAutoHideAsync()
 
@@ -32,9 +30,11 @@ const App = () => {
   }
 
   return (
-    <NavigationContainer>
-      <AppNavigation />
-    </NavigationContainer>
+    <SafeAreaView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <AppNavigation />
+      </NavigationContainer>
+    </SafeAreaView>
   )
 }
 
