@@ -42,6 +42,7 @@ const App = () => {
         <Stack.Screen
           name="review-detail"
           component={DetailScreen}
+          options={{ title: 'Detail Page' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
