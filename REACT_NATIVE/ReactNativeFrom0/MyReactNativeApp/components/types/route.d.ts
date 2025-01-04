@@ -1,6 +1,6 @@
 type RootStackParamList = {
     "home": undefined;
-    "review-detail": {id: number, title: string, star: number} | undefined;
+    "review-detail": {id: number, title: string, rating: number} | undefined;
 }
 
 declare global {
@@ -8,3 +8,5 @@ declare global {
         interface RootParamList extends RootStackParamList { }
     }
 }
+
+declare module "*.png"
