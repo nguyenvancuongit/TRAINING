@@ -6,10 +6,34 @@ import { AntDesign } from "@expo/vector-icons";
 interface IProps {
     modalVisible: boolean;
     setModalVisible: (modalVisible: boolean) => void;
+    addNew: any;
 }
 
 const CreateModal = (props: IProps) => {
-    const { modalVisible, setModalVisible } = props;
+    const { modalVisible, setModalVisible, addNew } = props;
+    const [title, setTitle] = React.useState("");
+    const [star, setStar] = React.useState("");
+
+    function randonInteger(min: number, max: number) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    const handleSubmit = () => {
+        if (title === "" || star === "") {
+            alert("Please fill all fields");
+            return;
+        }
+
+        addNew({
+            id: randonInteger(1, 1000),
+            title,
+            rating: parseInt(star),
+        });
+
+        setModalVisible(false);
+        setStar("");
+        setTitle("");
+    }
 
     return (
         <Modal
@@ -22,27 +46,42 @@ const CreateModal = (props: IProps) => {
                 <View style={styles.header}>
                     <Text style={{ fontSize: 25 }}>Create a review</Text>
                     <AntDesign
-                        onPress={() => setModalVisible(false)}
+                        onPress={() => {
+                            setModalVisible(false);
+                            setTitle("");
+                            setStar("");
+                        }}
                         name="close" size={24} color="black" />
-
                 </View>
 
                 {/* body */}
                 <View>
                     <View style={styles.groupInput}>
                         <Text style={styles.text}>Nội dung</Text>
-                        <TextInput style={styles.input} />
+                        <TextInput
+                            value={title}
+                            style={styles.input}
+                            onChangeText={(v) => setTitle(v)}
+                        />
                     </View>
                     <View>
                         <Text style={styles.text}>Rating</Text>
-                        <TextInput style={styles.input} />
+                        <TextInput
+                            keyboardType="numeric"
+                            style={styles.input}
+                            value={star}
+                            onChangeText={(v) => setStar(v)}
+                        />
                     </View>
                 </View>
 
                 {/* footer */}
                 <View>
                     <View style={{ marginTop: 20 }}>
-                        <Button title="Add" />
+                        <Button
+                            title="Add"
+                            onPress={handleSubmit}
+                        />
                     </View>
                 </View>
 
